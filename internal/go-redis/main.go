@@ -50,4 +50,68 @@ func main() {
 			log.Println(err)
 		}
 	}
+
+	// GET <key>
+	{
+		cmd := redis.Get(ctx, "key")
+		if res, err := cmd.Result(); err != nil {
+			log.Println(err)
+		} else {
+			log.Printf("%s", res)
+		}
+	}
+
+	// MSET <key> <value>
+	{
+		cmd := redis.MSet(ctx, "key1", "value1", "key2", "value2", "key3", "value3")
+		if err := cmd.Err(); err != nil {
+			log.Println(err)
+		}
+	}
+
+	// MGET <key> <value>
+	{
+		cmd := redis.MGet(ctx, "key1", "key2", "key3")
+		if res, err := cmd.Result(); err != nil {
+			log.Println(err)
+		} else {
+			log.Printf("%v", res)
+		}
+	}
+
+	// APPEND <key> <value>
+	{
+		cmd := redis.Append(ctx, "key", "value")
+		if err := cmd.Err(); err != nil {
+			log.Println(err)
+		}
+	}
+
+	// STRLEN <key>
+	{
+		cmd := redis.StrLen(ctx, "key")
+		if res, err := cmd.Result(); err != nil {
+			log.Println(err)
+		} else {
+			log.Printf("%v", res)
+		}
+	}
+
+	// GETRANGE <key> <start> <end>
+	{
+		cmd := redis.GetRange(ctx, "key", 1, 3)
+		if res, err := cmd.Result(); err != nil {
+			log.Println(err)
+		} else {
+			log.Printf("%v", res)
+		}
+	}
+
+	// SETRANGE <key> <offset> <value>
+	{
+		cmd := redis.SetRange(ctx, "key", 6, "Redis")
+		if err := cmd.Err(); err != nil {
+			log.Println(err)
+		}
+	}
 }

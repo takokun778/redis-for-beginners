@@ -216,6 +216,14 @@ OK
 ```
 
 ```go
+// go-redis
+cmd := redis.Get(ctx, "key")
+if res, err := cmd.Result(); err != nil {
+    log.Println(err)
+} else {
+    log.Printf("%s", res)
+}
+
 // rueidis
 cmd := redis.B().Get().Key(key).Build()
 if val, err := redis.Do(ctx, cmd).ToString(); err != nil {
@@ -236,6 +244,12 @@ OK
 ```
 
 ```go
+// go-redis
+cmd := redis.MSet(ctx, "key1", "value1", "key2", "value2", "key3", "value3")
+if err := cmd.Err(); err != nil {
+    log.Println(err)
+}
+
 // rueidis
 cmd1 := redis.B().Set().Key("key1").Value("val1").Build()
 cmd2 := redis.B().Set().Key("key2").Value("val2").Build()
@@ -259,6 +273,14 @@ for _, res := range redis.DoMulti(ctx, cmd1, cmd2, cmd3) {
 ```
 
 ```go
+// go-redis
+cmd := redis.MGet(ctx, "key1", "key2", "key3")
+if res, err := cmd.Result(); err != nil {
+    log.Println(err)
+} else {
+    log.Printf("%v", res)
+}
+
 // rueidis
 cmd1 := redis.B().Get().Key("key1").Build()
 cmd2 := redis.B().Get().Key("key2").Build()
@@ -283,6 +305,12 @@ for _, res := range redis.DoMulti(ctx, cmd1, cmd2, cmd3) {
 ```
 
 ```go
+// go-redis
+cmd := redis.Append(ctx, "key", "value")
+if err := cmd.Err(); err != nil {
+    log.Println(err)
+}
+
 // rueidis
 cmd := redis.B().Append().Key("key").Value("val").Build()
 if err := redis.Do(ctx, cmd).Error(); err != nil {
@@ -300,6 +328,14 @@ if err := redis.Do(ctx, cmd).Error(); err != nil {
 ```
 
 ```go
+// go-redis
+cmd := redis.StrLen(ctx, "key")
+if res, err := cmd.Result(); err != nil {
+    log.Println(err)
+} else {
+    log.Printf("%v", res)
+}
+
 // rueidis
 cmd := redis.B().Strlen().Key("key").Build()
 if val, err := redis.Do(ctx, cmd).ToInt64(); err != nil {
@@ -319,6 +355,14 @@ if val, err := redis.Do(ctx, cmd).ToInt64(); err != nil {
 ```
 
 ```go
+// go-redis
+cmd := redis.GetRange(ctx, "key", 1, 3)
+if res, err := cmd.Result(); err != nil {
+    log.Println(err)
+} else {
+    log.Printf("%v", res)
+}
+
 // rueidis
 cmd := redis.B().Getrange().Key("key").Start(1).End(3).Build()
 if val, err := redis.Do(ctx, cmd).ToString(); err != nil {
@@ -342,6 +386,12 @@ OK
 ```
 
 ```go
+// go-redis
+cmd := redis.SetRange(ctx, "key", 6, "Redis")
+if err := cmd.Err(); err != nil {
+    log.Println(err)
+}
+
 // rueidis
 cmd := redis.B().Setrange().Key("key").Offset(6).Value("Redis").Build()
 if err := redis.Do(ctx, cmd).Error(); err != nil {
