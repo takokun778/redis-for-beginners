@@ -415,6 +415,14 @@ if err := redis.Do(ctx, cmd).Error(); err != nil {
 ```
 
 ```go
+// go-redis
+cmd := redis.Incr(ctx, "key")
+if res, err := cmd.Result(); err != nil {
+    log.Println(err)
+} else {
+    log.Printf("%v", res)
+}
+
 // rueidis
 cmd := redis.B().Incr().Key("key").Build()
 if val, err := redis.Do(ctx, cmd).ToInt64(); err != nil {
@@ -429,12 +437,20 @@ if val, err := redis.Do(ctx, cmd).ToInt64(); err != nil {
 キーと値を指定した整数だけ増加します。指定したキーが存在しない場合には、操作前に0がセットされます。
 
 ```shell
-127.0.0.1:6379> INCRBY key 5
-(integer) 5
+127.0.0.1:6379> INCRBY key 4
+(integer) 4
 ```
 
 
 ```go
+// go-redis
+cmd := redis.IncrBy(ctx, "key", 4)
+if res, err := cmd.Result(); err != nil {
+    log.Println(err)
+} else {
+    log.Printf("%v", res)
+}
+
 // rueidis
 cmd := redis.B().Incrby().Key("key").Increment(5).Build()
 if val, err := redis.Do(ctx, cmd).ToInt64(); err != nil {
@@ -455,6 +471,14 @@ if val, err := redis.Do(ctx, cmd).ToInt64(); err != nil {
 ```
 
 ```go
+// go-redis
+cmd := redis.IncrByFloat(ctx, "key", 4.6)
+if res, err := cmd.Result(); err != nil {
+    log.Println(err)
+} else {
+    log.Printf("%v", res)
+}
+
 // rueidis
 cmd := redis.B().Incrbyfloat().Key("key").Increment(4.6).Build()
 if val, err := redis.Do(ctx, cmd).AsFloat64(); err != nil {
@@ -474,6 +498,14 @@ if val, err := redis.Do(ctx, cmd).AsFloat64(); err != nil {
 ```
 
 ```go
+// go-redis
+cmd := redis.Decr(ctx, "key")
+if res, err := cmd.Result(); err != nil {
+    log.Println(err)
+} else {
+    log.Printf("%v", res)
+}
+
 // rueidis
 cmd := redis.B().Decr().Key("key").Build()
 if val, err := redis.Do(ctx, cmd).ToInt64(); err != nil {
@@ -493,6 +525,14 @@ if val, err := redis.Do(ctx, cmd).ToInt64(); err != nil {
 ```
 
 ```go
+// go-redis
+cmd := redis.DecrBy(ctx, "key", 4)
+if res, err := cmd.Result(); err != nil {
+    log.Println(err)
+} else {
+    log.Printf("%v", res)
+}
+
 // rueidis
 cmd := redis.B().Decrby().Key("key").Decrement(4).Build()
 if val, err := redis.Do(ctx, cmd).ToInt64(); err != nil {
@@ -516,6 +556,14 @@ OK
 ```
 
 ```go
+// go-redis
+cmd := redis.GetDel(ctx, "key")
+if res, err := cmd.Result(); err != nil {
+    log.Println(err)
+} else {
+    log.Printf("%v", res)
+}
+
 // rueidis
 cmd := redis.B().Getdel().Key("key").Build()
 if val, err := redis.Do(ctx, cmd).ToString(); err != nil {
@@ -545,6 +593,14 @@ if val, err := redis.Do(ctx, cmd).ToString(); err != nil {
 ```
 
 ```go
+// go-redis
+cmd := redis.Keys(ctx, "key*")
+if res, err := cmd.Result(); err != nil {
+    log.Println(err)
+} else {
+    log.Printf("%v", res)
+}
+
 // rueidis
 cmd := redis.B().Keys().Pattern("key*").Build()
 if val, err := redis.Do(ctx, cmd).AsStrSlice(); err != nil {
@@ -555,6 +611,7 @@ if val, err := redis.Do(ctx, cmd).AsStrSlice(); err != nil {
     }
 }
 ```
+
 ## [EXEISTS <key> [<key> ...]](https://redis.io/commands/exists/)
 
 指定したキーが存在するかどうかを確認します。
@@ -569,6 +626,14 @@ OK
 ```
 
 ```go
+// go-redis
+cmd := redis.Exists(ctx, "key")
+if res, err := cmd.Result(); err != nil {
+    log.Println(err)
+} else {
+    log.Printf("%v", res)
+}
+
 // rueidis
 cmd := redis.B().Exists().Key("key").Build()
 if val, err := redis.Do(ctx, cmd).AsBool(); err != nil {
@@ -592,6 +657,12 @@ OK
 ```
 
 ```go
+// go-redis
+cmd := redis.Del(ctx, "key")
+if err := cmd.Err(); err != nil {
+    log.Println(err)
+}
+
 // rueidis
 cmd := redis.B().Del().Key("key").Build()
 if err := redis.Do(ctx, cmd).Error(); err != nil {
